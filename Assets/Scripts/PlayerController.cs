@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
 	public float speed = 75f;
 	public float maxSpeed = 3f;
+	public bool grounded;
+	public float jumpForce;
+	private bool jump;
 
 	// Use this for initialization
 	void Start () 
@@ -21,6 +24,20 @@ public class PlayerController : MonoBehaviour
 	void Update ()
 	{
 		animator.SetFloat ("speed", Mathf.Abs(rb2d.velocity.x)); //Mathf.Abs(): devuelve float sin signo (valor absoluto, no importa si es positivo o negativo)
+		if (grounded) 
+		{
+			animator.SetBool("grounded", true);
+		} 
+		else
+		{
+			animator.SetBool("grounded", false);
+		}
+
+		if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
+		{
+			jump = true; 
+		}
+
 	}
 
 	void FixedUpdate()
@@ -30,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
 		//rb2d.velocity = new Vector2 (x_velocity * speed, rb2d.velocity.y);
 
+		//agrego fuerza para correr
 		rb2d.AddForce (Vector2.right * speed * x_velocity); 
 
 		//limito la velocidad 
@@ -46,7 +64,7 @@ public class PlayerController : MonoBehaviour
 		float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
 		rb2d.velocity = new Vector2(limitedSpeed, rb2d.velocity.y);
 
-		Debug.Log(rb2d.velocity);
+		//Debug.Log(rb2d.velocity);
 
 		//si va hacia la izquierda, hago rotacion para que mire hacia allá
 		if(rb2d.velocity.x < -0.1f) 
@@ -56,6 +74,13 @@ public class PlayerController : MonoBehaviour
 		if(rb2d.velocity.x > 0.1f) //if (Mathf.) 
 		{
 			transform.localRotation = new Quaternion(0f, 0f, 0f, 0f); 
+		}
+
+		//agrego fuerza para saltar
+		if (jump) 
+		{
+			rb2d.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);	
+			jump = false;
 		}
 	}
 }

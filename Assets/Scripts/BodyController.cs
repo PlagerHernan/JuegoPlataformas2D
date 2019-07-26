@@ -21,14 +21,14 @@ public class BodyController : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Ground") 
 		{
-			GetComponentInParent<Animator>().SetBool("grounded", true);
+			GetComponentInParent<PlayerController> ().grounded = true;
 		}
 	}
 	void OnCollisionExit2D (Collision2D other)
 	{
 		if (other.gameObject.tag == "Ground") 
 		{
-			GetComponentInParent<Animator>().SetBool("grounded", false);
+			GetComponentInParent<PlayerController> ().grounded = false;
 		}
 	}
 }
