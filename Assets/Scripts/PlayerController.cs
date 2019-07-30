@@ -35,13 +35,21 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
 		{
-			jump = true; 
+			jump = true; //se concreta luego en FixedUpdate()
 		}
-
 	}
 
 	void FixedUpdate()
 	{
+		//fricción artificial, para que no se deslice indefinidamente (plataformas tienen physicsMaterial Deslizante, para no quedar enganchado en paredes)
+		float fixedVelocity = rb2d.velocity.x;
+		if (grounded) 
+		{
+			fixedVelocity *= 0.75f;
+			rb2d.velocity = new Vector2 (fixedVelocity, rb2d.velocity.y);
+		}
+
+
 		float x_velocity = Input.GetAxis ("Horizontal");
 		//Debug.Log (x_velocity);
 
@@ -79,8 +87,15 @@ public class PlayerController : MonoBehaviour
 		//agrego fuerza para saltar
 		if (jump) 
 		{
+			rb2d.velocity = new Vector2 (rb2d.velocity.x, 0f); //antes de agregar fuerza, me aseguro que la velocidad vertical sea cero, para no añadir impulso al impulso (evitar doble salto)
 			rb2d.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);	
 			jump = false;
 		}
+	}
+
+	//cuando cae y ya no está visible en la escena, vuelvo a posicionarlo
+	void OnBecameInvisible()
+	{
+		transform.position = new Vector3 (-3f, -1f, 0f);
 	}
 }
