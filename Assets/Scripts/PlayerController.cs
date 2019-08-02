@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
 {
-	private Rigidbody2D rb2d; 
+	public Rigidbody2D rb2d; 
+	public SpriteRenderer spriteRend;
 	private Animator animator;
 
 	public float speed = 75f;
 	public float maxSpeed = 3f;
 	public bool grounded;
-	public float jumpForce;
-	private bool jump;
+	public float jumpForcePlayer = 9.5f;
+	public bool jump;
+	private Color color;
+	private bool movement = true;
 
 	// Use this for initialization
 	void Start () 
 	{
 		rb2d = GetComponent<Rigidbody2D> ();	
 		animator = GetComponent<Animator> ();
+		spriteRend = GetComponent<SpriteRenderer> ();
+		color = new Color (246 / 255f, 97 / 255f, 11 / 255f); //color anaranjado, para shock
 	}
 	
 	 //Update is called once per frame
@@ -35,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
 		{
+			jumpForcePlayer = 9.5f;
 			jump = true; //se concreta luego en FixedUpdate()
 		}
 	}
@@ -49,11 +55,11 @@ public class PlayerController : MonoBehaviour
 			rb2d.velocity = new Vector2 (fixedVelocity, rb2d.velocity.y);
 		}
 
-
 		float x_velocity = Input.GetAxis ("Horizontal");
-		//Debug.Log (x_velocity);
-
-		//rb2d.velocity = new Vector2 (x_velocity * speed, rb2d.velocity.y);
+		if (!movement) 
+		{
+			x_velocity = 0f;
+		}
 
 		//agrego fuerza para correr
 		rb2d.AddForce (Vector2.right * speed * x_velocity); 
@@ -72,30 +78,67 @@ public class PlayerController : MonoBehaviour
 		float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
 		rb2d.velocity = new Vector2(limitedSpeed, rb2d.velocity.y);
 
-		//Debug.Log(rb2d.velocity);
-
 		//si va hacia la izquierda, hago rotacion para que mire hacia allá
 		if(rb2d.velocity.x < -0.1f) 
 		{
 			transform.localRotation = new Quaternion(0f, 180f, 0f, 0f); 
 		}
-		if(rb2d.velocity.x > 0.1f) //if (Mathf.) 
+		if(rb2d.velocity.x > 0.1f)
 		{
 			transform.localRotation = new Quaternion(0f, 0f, 0f, 0f); 
 		}
 
-		//agrego fuerza para saltar
 		if (jump) 
 		{
-			rb2d.velocity = new Vector2 (rb2d.velocity.x, 0f); //antes de agregar fuerza, me aseguro que la velocidad vertical sea cero, para no añadir impulso al impulso (evitar doble salto)
-			rb2d.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);	
-			jump = false;
+			Jump (jumpForcePlayer);
 		}
 	}
 
 	//cuando cae y ya no está visible en la escena, vuelvo a posicionarlo
-	void OnBecameInvisible()
+//	void OnBecameInvisible()
+//	{
+//		transform.position = new Vector3 (-3f, -1f, 0f);
+//	}
+
+	public void Jump(float jumpForce)
 	{
-		transform.position = new Vector3 (-3f, -1f, 0f);
+		//Debug.Log("fuerza de salto: " + jumpForce);
+
+		rb2d.velocity = new Vector2 (rb2d.velocity.x, 0f); //antes de agregar fuerza, me aseguro que la velocidad vertical sea cero, para no añadir impulso al impulso (evitar doble salto)
+		rb2d.AddForce (Vector2.up * jumpForcePlayer, ForceMode2D.Impulse);	
+		jump = false;
+	}
+
+	void OnCollisionEnter2D (Collision2D other)
+	{
+		if (other.gameObject.tag == "Enemy") 
+		{
+			Shock (other.gameObject.transform.position.x);
+			Invoke ("Unshock", 1f);
+		}	
+	}
+
+//	void OnCollisionExit2D (Collision2D other)
+//	{
+//		if (other.gameObject.tag == "Enemy") 
+//		{
+//			
+//		}
+//	}
+
+	void Shock(float positionEnemy)
+	{
+		spriteRend.color = color; 
+		movement = false; 
+		jump = true;
+
+		float side = Mathf.Sign (positionEnemy - transform.position.x); //si player está a la izquierda de enemy retorna 1, si está a la derecha retorna -1
+		Debug.Log(side);
+		rb2d.AddForce (Vector2.left * side * jumpForcePlayer, ForceMode2D.Impulse);
+	}
+	void Unshock()
+	{
+		spriteRend.color = Color.white; //Color.white: transparente
+		movement = true;
 	}
 }

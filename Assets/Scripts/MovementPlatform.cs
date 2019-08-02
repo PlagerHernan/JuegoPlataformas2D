@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovementPlatform : MonoBehaviour 
 {
 	public Transform target;
+	public PlayerController player;
 
 	private Vector3 from;
 	private bool boolTarget;
@@ -29,4 +30,12 @@ public class MovementPlatform : MonoBehaviour
 			boolTarget = true;
 		}
 	}
+
+//	void OnCollisionEnter2D(Collision2D other)
+//	{
+//		if (other.gameObject.tag == "Player") 
+//		{
+//			player.rb2d.velocity = Vector2.zero; //quita la velocidad de player al entrar a plataforma, para que que no se quede en animación de salto
+//		}
+//	}
 }

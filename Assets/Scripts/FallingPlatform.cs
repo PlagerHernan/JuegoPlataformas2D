@@ -23,7 +23,7 @@ public class FallingPlatform : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Player") 
 		{
-			Invoke ("Falling", 1f);
+			Invoke ("Falling", 0.5f);
 			Invoke("Reappear", 4f);
 		}
 	}
