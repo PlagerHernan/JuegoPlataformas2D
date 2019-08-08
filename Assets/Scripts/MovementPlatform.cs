@@ -30,12 +30,4 @@ public class MovementPlatform : MonoBehaviour
 			boolTarget = true;
 		}
 	}
-
-//	void OnCollisionEnter2D(Collision2D other)
-//	{
-//		if (other.gameObject.tag == "Player") 
-//		{
-//			player.rb2d.velocity = Vector2.zero; //quita la velocidad de player al entrar a plataforma, para que que no se quede en animación de salto
-//		}
-//	}
 }

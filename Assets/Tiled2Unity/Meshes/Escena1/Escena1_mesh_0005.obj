@@ -1,0 +1,43 @@
+﻿# Tiled2Unity generated file. Do not modify by hand.
+# Wavefront file for 'Escena1_mesh_0005.obj'
+
+# Vertices (Count = 16)
+v -9 -6 0
+v -10 -6 0
+v -10 -5 0
+v -9 -5 0
+v -1 -8 0
+v -2 -8 0
+v -2 -7 0
+v -1 -7 0
+v -12 -8 0
+v -13 -8 0
+v -13 -7 0
+v -12 -7 0
+v -19 -8 0
+v -20 -8 0
+v -20 -7 0
+v -19 -7 0
+
+# Texture cooridinates (Count = 8)
+vt 0.5679191 0.966763
+vt 0.5982659 0.966763
+vt 0.5982659 0.9971098
+vt 0.5679191 0.9971098
+vt 0.5346821 0.933526
+vt 0.5650289 0.933526
+vt 0.5650289 0.9638728
+vt 0.5346821 0.9638728
+
+# Normal
+vn 0 0 -1
+
+# Mesh description
+g Escena1_mesh_0005
+
+# Faces
+f 1/1/1 2/2/1 3/3/1 4/4/1
+f 5/1/1 6/2/1 7/3/1 8/4/1
+f 9/1/1 10/2/1 11/3/1 12/4/1
+f 13/5/1 14/6/1 15/7/1 16/8/1
+

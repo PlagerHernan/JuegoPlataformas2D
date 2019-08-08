@@ -7,8 +7,6 @@ public class Legs : MonoBehaviour
 	private PlayerController player;
 	private CircleCollider2D coll;
 
-	private float offset = 0.3f; //diferencia en altura entre enemy y player encima de él
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -28,20 +26,6 @@ public class Legs : MonoBehaviour
 			player.rb2d.velocity = Vector2.zero;
 			player.transform.parent = other.gameObject.transform; //cuando está en suelo, es hijo de él (para que se mueva junto con él en plataformas móviles)
 			player.grounded = true;
-		}
-
-		if (other.gameObject.tag == "Enemy")
-		{	
-			//si player está encima del enemigo, destruye el enemigo
-			if ((player.transform.position.y - other.gameObject.transform.position.y) > offset) {
-				GameObject.Destroy (other.gameObject);
-				player.jumpForcePlayer = 3f;
-				player.jump = true;
-			} 
-//			else 
-//			{
-//				player.spriteRend.color = Color.red;
-//			}
 		}
 	}
 

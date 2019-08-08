@@ -16,7 +16,8 @@ public class EnemyController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		
 	}
 
@@ -43,6 +44,25 @@ public class EnemyController : MonoBehaviour
 		if(rb2d.velocity.x > 0.1f)
 		{
 			transform.localRotation = new Quaternion(0f, 180f, 0f, 0f); 
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.gameObject.tag == "Player") 
+		{
+			float offset = 0.2f; //diferencia en altura entre enemy y player encima de él (para destruir enemy)
+			//si player está encima del enemigo, destruye el enemigo
+			if (col.transform.position.y >= transform.position.y + offset) 
+			{ 
+				GameObject.Destroy (gameObject);
+				col.SendMessage ("JumpEnemy");
+			} 
+			//si no, se lastima player 
+			else
+			{
+				col.SendMessage ("Shock", transform.position.x);
+			}
 		}
 	}
 }
