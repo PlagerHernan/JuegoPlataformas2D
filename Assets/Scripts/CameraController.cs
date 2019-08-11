@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour 
 {
 	public PlayerController player;
 	public float smoothTime = 0.3f; 
+
+	public RawImage background;
+	public float parallaxSpeed = 0.03f;
 
 	public Vector2 minPosition;
 	public Vector2 maxPosition;
@@ -29,6 +33,11 @@ public class CameraController : MonoBehaviour
 												gameObject.transform.position.z);
 
 		//sin limites
-		//transform.position = new Vector3(smoothX, smoothY, transform.position.z); 
+		//transform.position = new Vector3(smoothX, smoothY, transform.position.z);
+
+		//movimiento fondo
+		background.uvRect = new Rect (transform.position.x * parallaxSpeed, 0f, 1f, 1f);
+
+		 
 	}
 }

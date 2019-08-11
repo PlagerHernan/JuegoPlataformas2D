@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
-{
+{	
 	public Rigidbody2D rb2d; 
 	public SpriteRenderer spriteRend;
 	private Animator animator;
+	public GameObject game;
 
 	public float speed = 75f;
 	public float maxSpeed = 3f;
 	public bool grounded;
 	public float jumpForcePlayer = 9.5f;
 	public bool jump;
+	private float health = 1f; //1f: salud completa, 0f: sin vida
 	//private Color color;
 	private bool movement = true;
 
@@ -112,8 +114,11 @@ public class PlayerController : MonoBehaviour
 		jump = true;
 
 		float side = Mathf.Sign (positionEnemy - transform.position.x); //si player está a la izquierda de enemy retorna 1, si está a la derecha retorna -1
-		Debug.Log(side);
-		rb2d.AddForce (Vector2.left * side * jumpForcePlayer, ForceMode2D.Impulse);
+		rb2d.AddForce (Vector2.left * side * jumpForcePlayer, ForceMode2D.Impulse); //salto hacia atrás y al costado
+
+		health = Mathf.Clamp (health - 0.25f, 0f, 1f); 
+		//health -= 0.25f;
+		game.SendMessage ("Damage", health);
 	}
 	void Unshock() //llamado desde evento en Player_Shock.anim
 	{
