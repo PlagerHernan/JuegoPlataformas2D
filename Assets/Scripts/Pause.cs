@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour 
 {
+	public GameObject keys;
+
 	private Canvas canvasPause;
-	private bool pause;
+	public bool pause;
 
 	// Use this for initialization
 	void Start () 
@@ -26,12 +28,16 @@ public class Pause : MonoBehaviour
 
 		if (pause) 
 		{
-			canvasPause.enabled = true;
 			Time.timeScale = 0f; //pausa el juego
+			canvasPause.enabled = true;
+			//settingsMenu.enabled = true;
+			keys.SetActive(true);
 		} 
 		else
 		{
 			canvasPause.enabled = false;
+			//settingsMenu.enabled = false;
+			keys.SetActive(false);
 			Time.timeScale = 1f; //reanuda el juego
 		}
 	}
