@@ -25,20 +25,22 @@ public class EnemyPersecutor : MonoBehaviour
 	{
 		//si player entra en el radio, se mueve hacia player
 		float distance = Vector3.Distance (player.transform.position, initialPosition);
-		if (distance < actionRadius) {
+		if (distance < actionRadius) 
+		{
 			transform.position = Vector3.MoveTowards (transform.position, player.transform.position, maxDistanceDelta * Time.deltaTime);
 			animator.Play ("EnemyPersecutor_Walk");
 		} 
-		//si no, vuelve a posicion inicial
-		else 
+		//si está en posicion inicial, se duerme
+		else if (transform.position.x == initialPosition.x) 
 		{
-			transform.position = Vector3.MoveTowards(transform.position, initialPosition, (maxDistanceDelta - 1f)  * Time.deltaTime);
-
-			if (transform.position == initialPosition) 
-			{
-				animator.Play ("EnemyPersecutor_Sleep");
-			}
-
+			animator.Play ("EnemyPersecutor_Sleep");
+		}
+		//si no, vuelve a posicion inicial (sólo en x, para evitar bug temblor)
+		else
+		{
+			transform.position = Vector3.MoveTowards(transform.position, 
+				new Vector3(initialPosition.x, transform.position.y, 0f), 
+															(maxDistanceDelta - 1f)  * Time.deltaTime);
 		}
 			
 		//si va hacia la izquierda, hago rotacion para que mire hacia allá 

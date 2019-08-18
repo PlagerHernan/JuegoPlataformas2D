@@ -6,11 +6,13 @@ public class Legs : MonoBehaviour
 {
 	private PlayerController player;
 	private CircleCollider2D coll;
+	Rigidbody2D rb2dPlayer;
 
 	// Use this for initialization
 	void Start () 
 	{
 		player = GetComponentInParent<PlayerController> ();	
+		rb2dPlayer = GetComponentInParent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +25,7 @@ public class Legs : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Platform") 
 		{
-			player.rb2d.velocity = Vector2.zero;
+			rb2dPlayer.velocity = Vector2.zero;
 			player.transform.parent = other.gameObject.transform; //cuando está en suelo, es hijo de él (para que se mueva junto con él en plataformas móviles)
 			player.grounded = true;
 		}

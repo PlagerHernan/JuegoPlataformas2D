@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
 		
 	}
 
+	//recibe de player el daño, y modifica la barra de salud
 	public void Damage(float playerHealth)
 	{
 		healthBar.rectTransform.localScale = new Vector3 (playerHealth, 1f, 1f);

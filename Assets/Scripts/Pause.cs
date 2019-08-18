@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour 
 {
-	public GameObject keys;
+	//public InteractiveElement buttonPause;
+	public GameObject infoPause;
+	public GameObject userInterface;
 
 	private Canvas canvasPause;
 	public bool pause;
@@ -17,28 +19,40 @@ public class Pause : MonoBehaviour
 		canvasPause = GetComponent<Canvas> ();
 		canvasPause.enabled = false;
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
-		if (Input.GetKeyDown(KeyCode.Space)) 
+		//bool activeButtonPause = buttonPause.click;
+
+		if (Input.GetKeyDown(KeyCode.Space)) //|| activeButtonPause) 
 		{
 			pause = !pause;
 		}
 
 		if (pause) 
 		{
-			Time.timeScale = 0f; //pausa el juego
-			canvasPause.enabled = true;
-			//settingsMenu.enabled = true;
-			keys.SetActive(true);
+			EnterPause ();
 		} 
 		else
 		{
-			canvasPause.enabled = false;
-			//settingsMenu.enabled = false;
-			keys.SetActive(false);
-			Time.timeScale = 1f; //reanuda el juego
+			ExitPause ();
 		}
+	}
+
+	public void EnterPause()
+	{
+		Time.timeScale = 0f; //pausa el juego
+		canvasPause.enabled = true;
+		//settingsMenu.enabled = true;
+		infoPause.SetActive(true);
+		userInterface.SetActive (false);
+	}
+	public void ExitPause()
+	{
+		canvasPause.enabled = false;
+		//settingsMenu.enabled = false;
+		infoPause.SetActive(false);
+		userInterface.SetActive (true);
+		Time.timeScale = 1f; //reanuda el juego
 	}
 }

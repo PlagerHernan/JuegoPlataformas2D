@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
 {	
-	public Rigidbody2D rb2d; 
-	public SpriteRenderer spriteRend;
-	private Animator animator;
 	public GameObject game;
+	public SimpleTouchController leftController;
+	public InteractiveElement buttonJump;
+
+	Rigidbody2D rb2d; 
+	Animator animator;
+	ParticleSystem dust;
 
 	public float speed = 75f;
 	public float maxSpeed = 3f;
@@ -23,14 +26,16 @@ public class PlayerController : MonoBehaviour
 	{
 		rb2d = GetComponent<Rigidbody2D> ();	
 		animator = GetComponent<Animator> ();
-		spriteRend = GetComponent<SpriteRenderer> ();
 		//color = new Color (246 / 255f, 97 / 255f, 11 / 255f); //color anaranjado (alternativa para shock)
+		dust = GetComponentInChildren<ParticleSystem>();
 	}
 	
 	 //Update is called once per frame
 	void Update ()
 	{
+		//SET ANIMATOR PARAMETERS
 		animator.SetFloat ("speed", Mathf.Abs(rb2d.velocity.x)); //Mathf.Abs(): devuelve float sin signo (valor absoluto, no importa si es positivo o negativo)
+
 		if (grounded) 
 		{
 			animator.SetBool("grounded", true);
@@ -40,10 +45,23 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("grounded", false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
+		bool userJump = Input.GetKeyDown(KeyCode.UpArrow) || buttonJump.click;
+
+		if (userJump && grounded) 
 		{
 			jumpForcePlayer = 9.5f;
 			jump = true; //se concreta luego en FixedUpdate()
+		}
+
+		//si se mueve hacia la izquierda
+		if(rb2d.velocity.x < -0.1f) 
+		{
+			transform.localRotation = new Quaternion(0f, 180f, 0f, 0f); 
+		}
+		//si se mueve hacia la derecha
+		else if(rb2d.velocity.x > 0.1f)
+		{
+			transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 		}
 	}
 
@@ -57,7 +75,11 @@ public class PlayerController : MonoBehaviour
 			rb2d.velocity = new Vector2 (fixedVelocity, rb2d.velocity.y);
 		}
 
-		float x_velocity = Input.GetAxis ("Horizontal");
+		//TECLADO
+		//float x_velocity = Input.GetAxis ("Horizontal");
+
+		//TACTIL (JOYSTICK)
+		float x_velocity = leftController.GetTouchPosition.x;
 
 		if (!movement) 
 		{
@@ -70,16 +92,6 @@ public class PlayerController : MonoBehaviour
 		//limita la velocidad 
 		float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
 		rb2d.velocity = new Vector2(limitedSpeed, rb2d.velocity.y);
-
-		//si va hacia la izquierda, hace rotacion para que mire hacia allá
-		if(rb2d.velocity.x < -0.1f) 
-		{
-			transform.localRotation = new Quaternion(0f, 180f, 0f, 0f); 
-		}
-		if(rb2d.velocity.x > 0.1f)
-		{
-			transform.localRotation = new Quaternion(0f, 0f, 0f, 0f); 
-		}
 
 		if (jump) 
 		{
@@ -125,4 +137,16 @@ public class PlayerController : MonoBehaviour
 		//spriteRend.color = Color.white; //transparente (color original)
 		movement = true;
 	}
+
+	[ ContextMenu("PlayDust") ]
+	public void PlayDust()
+	{
+		dust.Play ();
+	} 
+
+	[ ContextMenu("StopDust") ]
+	public void StopDust()
+	{
+		dust.Stop();
+	} 
 }
