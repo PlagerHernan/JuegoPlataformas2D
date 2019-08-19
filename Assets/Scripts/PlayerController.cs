@@ -76,10 +76,10 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//TECLADO
-		//float x_velocity = Input.GetAxis ("Horizontal");
+		float x_velocity = Input.GetAxis ("Horizontal");
 
 		//TACTIL (JOYSTICK)
-		float x_velocity = leftController.GetTouchPosition.x;
+		//float x_velocity = leftController.GetTouchPosition.x;
 
 		if (!movement) 
 		{
