@@ -11,7 +11,7 @@ public class ClickNewGame : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 	public void OnPointerDown  (PointerEventData evenData)
 	{
-		GetComponentInChildren<Text> ().fontSize = 37;
+		GetComponentInChildren<Text> ().color = Color.cyan;
 	}
 
 	public void OnPointerUp  (PointerEventData evenData)
@@ -21,6 +21,7 @@ public class ClickNewGame : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 	void ChangeScene()
 	{
+		GetComponentInChildren<Text> ().color = Color.black;
 		SceneManager.LoadScene(targetScene);
 	}
 }

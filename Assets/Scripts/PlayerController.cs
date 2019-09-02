@@ -99,12 +99,6 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	//cuando cae y ya no está visible en la escena, vuelvo a posicionarlo (obsoleto luego de seguimiento de camara)
-//	void OnBecameInvisible()
-//	{
-//		transform.position = new Vector3 (-3f, -1f, 0f);
-//	}
-
 	public void Jump(float jumpForce)
 	{
 		rb2d.velocity = new Vector2 (rb2d.velocity.x, 0f); //antes de agregar fuerza, me aseguro que la velocidad vertical sea cero, para no añadir impulso al impulso (evitar doble salto)
@@ -129,13 +123,19 @@ public class PlayerController : MonoBehaviour
 		rb2d.AddForce (Vector2.left * side * jumpForcePlayer, ForceMode2D.Impulse); //salto hacia atrás y al costado
 
 		health = Mathf.Clamp (health - 0.25f, 0f, 1f); 
-		//health -= 0.25f;
 		game.SendMessage ("Damage", health);
 	}
 	void Unshock() //llamado desde evento en Player_Shock.anim
 	{
 		//spriteRend.color = Color.white; //transparente (color original)
 		movement = true;
+	}
+
+	//cuando cae y ya no está visible en la escena
+	void OnBecameInvisible()
+	{
+		health = 0f;
+		game.SendMessage ("Damage", health);
 	}
 
 	[ ContextMenu("PlayDust") ]
@@ -149,4 +149,12 @@ public class PlayerController : MonoBehaviour
 	{
 		dust.Stop();
 	} 
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.gameObject.name == "Flag") 
+		{
+			game.SendMessage ("NextLevel");
+		}
+	}
 }

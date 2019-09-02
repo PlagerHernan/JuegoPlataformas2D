@@ -101,6 +101,7 @@
      <None Include="Assets\Tiled2Unity\Shaders\shaDepthColorKey-Instanced.shader" />
      <None Include="Assets\Tiled2Unity\License.txt" />
      <None Include="Assets\Tiled2Unity\Imported\_ReadMe.txt" />
+     <None Include="Assets\Tiled2Unity\Imported\WinterTerrain.tiled2unity.xml" />
      <None Include="Assets\Tiled2Unity\Meshes\_ReadMe.txt" />
      <None Include="Assets\Tiled2Unity\Imported\Terrain.tiled2unity.xml" />
  <Reference Include="UnityEngine.UI">

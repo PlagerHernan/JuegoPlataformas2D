@@ -24,20 +24,21 @@ public class CameraController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		float smoothX = Mathf.SmoothDamp (transform.position.x, player.transform.position.x, ref velocity.x, smoothTime); 
-		float smoothY = Mathf.SmoothDamp (transform.position.y, player.transform.position.y, ref velocity.y, smoothTime);
+		if (player != null) 
+		{
+			float smoothX = Mathf.SmoothDamp (transform.position.x, player.transform.position.x, ref velocity.x, smoothTime); 
+			float smoothY = Mathf.SmoothDamp (transform.position.y, player.transform.position.y, ref velocity.y, smoothTime);
 
-		//con limites
-		transform.position = new Vector3 (Mathf.Clamp(smoothX, minPosition.x, maxPosition.x),
-											Mathf.Clamp(smoothY, minPosition.y, maxPosition.y),
-												gameObject.transform.position.z);
+			//con limites
+			transform.position = new Vector3 (Mathf.Clamp(smoothX, minPosition.x, maxPosition.x),
+				Mathf.Clamp(smoothY, minPosition.y, maxPosition.y),
+				gameObject.transform.position.z);
 
-		//sin limites
-		//transform.position = new Vector3(smoothX, smoothY, transform.position.z);
+			//sin limites
+			//transform.position = new Vector3(smoothX, smoothY, transform.position.z);
 
-		//movimiento fondo
-		background.uvRect = new Rect (transform.position.x * parallaxSpeed, 0f, 1f, 1f);
-
-		 
+			//movimiento fondo
+			background.uvRect = new Rect (transform.position.x * parallaxSpeed, 0f, 1f, 1f);
+		} 
 	}
 }

@@ -23,6 +23,7 @@ public class ClickExitToMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 	void ChangeScene()
 	{
+		GetComponentInChildren<Text> ().color = Color.black;
 		SceneManager.LoadScene("Menu");
 	}
 }

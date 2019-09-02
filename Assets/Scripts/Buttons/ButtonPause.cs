@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ButtonPause : MonoBehaviour, IPointerDownHandler, IPointerUpHandler  
 {
 	public Pause scriptPause;
-	public bool click = false;
+	public bool boolpause;
 
 	public void OnPointerDown  (PointerEventData evenData)
 	{
@@ -14,7 +14,6 @@ public class ButtonPause : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
 	public void OnPointerUp  (PointerEventData evenData)
 	{
-		//scriptPause.EnterPause ();
-		scriptPause.pause = true;
+		scriptPause.pause = boolpause;
 	}
 }

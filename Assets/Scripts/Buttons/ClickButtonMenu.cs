@@ -10,7 +10,7 @@ public class ClickButtonMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 	public void OnPointerDown  (PointerEventData evenData)
 	{
-		GetComponentInChildren<Text> ().fontSize = 37;
+		GetComponentInChildren<Text> ().color = Color.cyan;
 	}
 
 	public void OnPointerUp  (PointerEventData evenData)
@@ -22,6 +22,6 @@ public class ClickButtonMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 	{
 		GetComponentInParent<Canvas> ().gameObject.SetActive (false); //desactiva menu actual
 		targetMenu.gameObject.SetActive (true); //activa menu objetivo
-		GetComponentInChildren<Text> ().fontSize = 30;
+		GetComponentInChildren<Text> ().color = Color.black;
 	}
 }

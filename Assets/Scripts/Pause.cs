@@ -13,7 +13,6 @@ public class Pause : MonoBehaviour
 	private Canvas canvasPause;
 	public bool pause;
 
-	// Use this for initialization
 	void Start () 
 	{
 		canvasPause = GetComponent<Canvas> ();
@@ -43,14 +42,12 @@ public class Pause : MonoBehaviour
 	{
 		Time.timeScale = 0f; //pausa el juego
 		canvasPause.enabled = true;
-		//settingsMenu.enabled = true;
 		infoPause.SetActive(true);
 		userInterface.SetActive (false);
 	}
 	public void ExitPause()
 	{
 		canvasPause.enabled = false;
-		//settingsMenu.enabled = false;
 		infoPause.SetActive(false);
 		userInterface.SetActive (true);
 		Time.timeScale = 1f; //reanuda el juego
