@@ -11,6 +11,10 @@ public class Game : MonoBehaviour
 	Canvas gameOver; 
 	Canvas userInterface;
 	GameObject pause;
+	Text gameOverText;
+	Image gameOverImage;
+	Color gameOverColor;
+	Color levelCompletedColor;
 
 	// Use this for initialization
 	void Start () 
@@ -25,6 +29,10 @@ public class Game : MonoBehaviour
 
 		gameOver = GameObject.Find ("GameOver").GetComponent<Canvas>();
 		gameOver.enabled = false;
+		gameOverText = gameOver.GetComponentInChildren<Text> ();
+		gameOverImage = gameOver.GetComponentInChildren<Image> ();
+		gameOverColor = new Color (1f, 0f, 0f, 0.3f); //red
+		levelCompletedColor = new Color (0f, 1f, 0f, 0.3f); //green
 	}
 	
 	// Update is called once per frame
@@ -43,20 +51,23 @@ public class Game : MonoBehaviour
 		{
 			userInterface.enabled = false;
 			pause.SetActive (false);
-			gameOver.enabled = true;
 			GameObject.Destroy (player);
-			Invoke ("ExitToMenu", 2f);
+			StartCoroutine(LoadScene("Menu", "Juego Terminado", gameOverColor));
 		}
 	}
 
-	void ExitToMenu()
-	{
-		SceneManager.LoadScene ("Menu");
-	}
-
+	//llamado desde player
 	public void NextLevel()
 	{
-		
-		SceneManager.LoadScene ("Level_02");
+		StartCoroutine(LoadScene("Level_02", "Nivel completado", levelCompletedColor));
+	}
+
+	private IEnumerator LoadScene(string scene, string text, Color color)
+	{
+		gameOverText.text = text;
+		gameOverImage.color = color;
+		gameOver.enabled = true;
+		yield return new WaitForSeconds (3f);
+		SceneManager.LoadScene (scene);
 	}
 }
