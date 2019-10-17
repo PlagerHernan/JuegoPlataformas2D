@@ -46,22 +46,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Buttons\ButtonLoad.cs" />
      <Compile Include="Assets\Scripts\Buttons\ButtonPause.cs" />
      <Compile Include="Assets\Scripts\Buttons\ClickButtonMenu.cs" />
      <Compile Include="Assets\Scripts\Buttons\ClickExitToMenu.cs" />
      <Compile Include="Assets\Scripts\Buttons\ClickNewGame.cs" />
      <Compile Include="Assets\Scripts\Buttons\InteractiveElement.cs" />
+     <Compile Include="Assets\Scripts\Buttons\NewBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\Buttons\SimpleTouchController.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\DDOL.cs" />
+     <Compile Include="Assets\Scripts\DontDestroy.cs" />
      <Compile Include="Assets\Scripts\DrawSceneLine.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\EnemyPersecutor.cs" />
      <Compile Include="Assets\Scripts\FallingPlatform.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Legs.cs" />
      <Compile Include="Assets\Scripts\MovementPlatform.cs" />
      <Compile Include="Assets\Scripts\Pause.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Test.cs" />
+     <Compile Include="Assets\Scripts\UserInterface.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />

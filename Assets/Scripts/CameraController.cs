@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour 
 {
-	public PlayerController player;
+	private GameObject player;
 	public float smoothTime = 0.3f; 
 
 	public RawImage background;
@@ -15,12 +15,11 @@ public class CameraController : MonoBehaviour
 	public Vector2 maxPosition;
 	private Vector2 velocity;
 
-	// Use this for initialization
-	void Start () 
+	void Start()
 	{
-		
+		player = GameObject.Find ("Player");
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
