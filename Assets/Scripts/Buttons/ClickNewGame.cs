@@ -8,18 +8,13 @@ using UnityEngine.UI;
 public class ClickNewGame : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 	public string targetScene;
-	//GameObject game;
-	//Game game;
 
-//	void Awake()
-//	{
-//		game = Object.FindObjectOfType<Game> ();
-//	}
+	GameManager gameManager;
 
-//	void Start()
-//	{
-//		game = GameObject.Find ("Game");
-//	}
+	void Awake()
+	{
+		gameManager = Object.FindObjectOfType<GameManager> ();
+	}
 
 	public void OnPointerDown  (PointerEventData evenData)
 	{
@@ -35,6 +30,8 @@ public class ClickNewGame : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	{
 		GetComponentInChildren<Text> ().color = Color.black;
 		//game.SendMessage ("StartNewGame");
+
+		gameManager.Health = 1f;
 		SceneManager.LoadScene(targetScene);
 	}
 }

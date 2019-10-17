@@ -13,21 +13,6 @@ public class Pause : MonoBehaviour
 	private Canvas canvasPause;
 	public bool pause;
 
-//	public static Pause instance = null;
-//
-//	void Awake()
-//	{
-//		if (instance == null) 
-//		{
-//			instance = this;
-//		}
-//		else if (instance != this) 
-//		{
-//			Destroy (gameObject);
-//		}
-//		DontDestroyOnLoad (this);
-//	}
-
 	void Start () 
 	{
 		canvasPause = GetComponent<Canvas> ();

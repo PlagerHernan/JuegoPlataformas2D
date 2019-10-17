@@ -6,11 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour 
 {
-	
-
-	//public GameObject playerPrefab;
 	GameObject player;
-	float playerHealth = 1f; //1f: salud completa, 0f: sin vida
+	float playerHealth;
 	Image healthBar;
 	Canvas gameOver; 
 	Canvas userInterface;
@@ -20,9 +17,8 @@ public class Game : MonoBehaviour
 	Color gameOverColor;
 	Color levelCompletedColor;
 
-	bool playerIsAlive = true;
-
 	GameManager gameManager;
+	Scene activeScene;
 
 	void Awake()
 	{
@@ -34,8 +30,6 @@ public class Game : MonoBehaviour
 	{
 		gameOverColor = new Color (1f, 0f, 0f, 0.3f); //red
 		levelCompletedColor = new Color (0f, 1f, 0f, 0.3f); //green
-
-		Debug.Log ("health: " + gameManager.Health);
 
 		player = GameObject.Find("Player");
 
@@ -58,7 +52,9 @@ public class Game : MonoBehaviour
 		//player.transform.position = new Vector3 (-7f, -3.7f, 0f); //recoloca a player en inicio
 
 		playerHealth = gameManager.Health; //obtiene salud de GameManager
-		healthBar.rectTransform.localScale = new Vector3 (playerHealth, 1f, 1f); //configura barra de salud 	
+		healthBar.rectTransform.localScale = new Vector3 (playerHealth, 1f, 1f); //configura barra de salud 
+
+		activeScene = SceneManager.GetActiveScene (); 
 	}
 	
 	// Update is called once per frame
@@ -87,9 +83,6 @@ public class Game : MonoBehaviour
 		//si player ha muerto
 		if (healthBar.rectTransform.localScale.x == 0f || die) 
 		{
-			GameObject.Destroy (player);
-			//player.SetActive (false);
-			playerIsAlive = false;
 			Exit ();
 		}
 	}
@@ -97,19 +90,23 @@ public class Game : MonoBehaviour
 	//llamado desde player
 	public void NextLevel()
 	{
-		//PlayerPrefs.SetFloat ("health", playerHealth);
-		gameManager.Health = playerHealth;
-		StartCoroutine(ChangeScene("Level_02", "Nivel completado", levelCompletedColor));
+		PlayerPrefs.SetFloat ("health", playerHealth);
+		gameManager.Health = playerHealth; //brinda info a gameManager, para recibirla en el próximo nivel en Start()
+		PlayerPrefs.SetInt ("level", activeScene.buildIndex + 1);
+
+		StartCoroutine(ChangeScene(activeScene.buildIndex + 1, "Nivel completado", levelCompletedColor)); //activeScene.buildIndex + 1: nivel siguiente al actual
 	}
 
+	//llamado desde Damage() o desde ClickExitToMenu.cs
 	public void Exit()
 	{
-		StartCoroutine(ChangeScene("Menu", "Juego Terminado", gameOverColor));
+		StartCoroutine(ChangeScene(1, "Juego Terminado", gameOverColor)); //escena 1: menú
 	}
 
 	//coroutine
-	private IEnumerator ChangeScene (string scene, string text, Color color)
+	private IEnumerator ChangeScene (int scene, string text, Color color)
 	{
+		GameObject.Destroy (player);
 		pause.SetActive (false);
 		userInterface.enabled = false;
 		gameOverText.text = text;
@@ -118,13 +115,5 @@ public class Game : MonoBehaviour
 		yield return new WaitForSeconds (3f);
 		gameOver.enabled = false;
 		SceneManager.LoadScene (scene);
-
-		//si continúa el juego
-		if (playerIsAlive) 
-		{
-			userInterface.enabled = true;
-			pause.SetActive (true);
-			player.transform.position = new Vector3 (-7f, -3.7f, 0f);
-		} 
 	}
 }

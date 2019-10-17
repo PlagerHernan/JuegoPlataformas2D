@@ -20,15 +20,10 @@ public class PlayerController : MonoBehaviour
 	public bool jump;
 	private bool movement = true;
 
-//	public static PlayerController instance = null;
-//
 	Game game;
 
 	void Awake()
 	{
-		Test test = Object.FindObjectOfType<Test> ();
-		test.MostrarTest ();
-
 		game = Object.FindObjectOfType<Game> ();
 	}
 

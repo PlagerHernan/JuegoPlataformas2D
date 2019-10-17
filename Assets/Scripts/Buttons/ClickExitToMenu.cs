@@ -8,12 +8,6 @@ using UnityEngine.UI;
 public class ClickExitToMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 	public Pause csPause;
-	GameObject game;
-
-	void Start()
-	{
-		game = GameObject.Find ("Game");
-	}
 
 	public void OnPointerDown  (PointerEventData evenData)
 	{
@@ -22,15 +16,15 @@ public class ClickExitToMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 	public void OnPointerUp  (PointerEventData evenData)
 	{
-		ChangeScene();
-
 		csPause.pause = false;
+
+		Invoke ("ChangeScene", 0.15f);
 	}
 
 	void ChangeScene()
 	{
 		GetComponentInChildren<Text> ().color = Color.white;
-		//SceneManager.LoadScene("Menu");
-		game.SendMessage("Exit");
+
+		SceneManager.LoadScene ("Menu");
 	}
 }
