@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
 	GameObject pause;
 	Text gameOverText;
 	Image gameOverImage;
+
 	Color gameOverColor;
 	Color levelCompletedColor;
 
@@ -90,17 +91,26 @@ public class Game : MonoBehaviour
 	//llamado desde player
 	public void NextLevel()
 	{
-		PlayerPrefs.SetFloat ("health", playerHealth);
-		gameManager.Health = playerHealth; //brinda info a gameManager, para recibirla en el próximo nivel en Start()
+		//guarda datos con playerPref (luego recuperados por ButtonLoad.cs)
 		PlayerPrefs.SetInt ("level", activeScene.buildIndex + 1);
+		PlayerPrefs.SetFloat ("health", playerHealth);
+
+		gameManager.Health = playerHealth; //brinda info a gameManager, para recibirla en el próximo nivel en Start()
 
 		StartCoroutine(ChangeScene(activeScene.buildIndex + 1, "Nivel completado", levelCompletedColor)); //activeScene.buildIndex + 1: nivel siguiente al actual
 	}
 
+	//llamado desde player
+	public void GameWon()
+	{
+		StartCoroutine(ChangeScene(0, "Felicitaciones! Has ganado!", levelCompletedColor)); //escena 0: menú
+	}
+
+
 	//llamado desde Damage() o desde ClickExitToMenu.cs
 	public void Exit()
 	{
-		StartCoroutine(ChangeScene(1, "Juego Terminado", gameOverColor)); //escena 1: menú
+		StartCoroutine(ChangeScene(0, "Juego Terminado", gameOverColor)); //escena 0: menú
 	}
 
 	//coroutine

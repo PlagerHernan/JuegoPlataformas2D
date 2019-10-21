@@ -159,6 +159,10 @@ public class PlayerController : MonoBehaviour
 		{
 			game.SendMessage ("NextLevel");
 		}
+		if (col.gameObject.name == "FinalFlag") 
+		{
+			game.SendMessage ("GameWon");
+		}
 		if (col.gameObject.name == "Precipice") 
 		{
 			game.SendMessage ("Damage", true);

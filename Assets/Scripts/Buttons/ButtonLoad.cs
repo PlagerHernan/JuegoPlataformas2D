@@ -36,9 +36,9 @@ public class ButtonLoad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
 	void ChangeScene()
 	{
-		PlayerPrefs.DeleteAll ();
+		//PlayerPrefs.DeleteAll ();
 
-		//si hay una partida guardada (comienza a guardarse automaticamente al superar el 1er nivel)
+		//si hay una partida guardada (se guarda automaticamente al superar un nivel (NextLevel() en Game.cs))
 		if (PlayerPrefs.HasKey("health") && PlayerPrefs.HasKey("level")) 
 		{
 			//recupera datos de playerPref y se los asigna a gameManager (luego Game.cs los recupera en Start())

@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ClickButtonMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHandler  
+public class QuitApp : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
 {
-	public Canvas targetMenu;
 	Text text;
 	Color initialColor;
 
@@ -23,13 +22,13 @@ public class ClickButtonMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 	public void OnPointerUp  (PointerEventData evenData)
 	{
-		Invoke ("ChangeMenu", 0.15f);
+		Invoke ("ExitApp", 0.15f);
 	}
 
-	void ChangeMenu()
+	void ExitApp()
 	{
-		GetComponentInParent<Canvas> ().gameObject.SetActive (false); //desactiva menu actual
-		targetMenu.gameObject.SetActive (true); //activa menu objetivo
+		Application.Quit();
+		Debug.Log ("aplicación cerrada");
 		text.color = initialColor;
 	}
 }

@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Buttons\ClickNewGame.cs" />
      <Compile Include="Assets\Scripts\Buttons\InteractiveElement.cs" />
      <Compile Include="Assets\Scripts\Buttons\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\Buttons\QuitApp.cs" />
      <Compile Include="Assets\Scripts\Buttons\SimpleTouchController.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\DDOL.cs" />
@@ -67,7 +68,6 @@
      <Compile Include="Assets\Scripts\MovementPlatform.cs" />
      <Compile Include="Assets\Scripts\Pause.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\UserInterface.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
