@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour 
 {
+	AudioSource[] audios;
+	AudioSource gameSounds;
+	AudioSource gameMusic;
+	public AudioClip audioDie;
+	public AudioClip audioWin;
+
 	GameObject player;
 	float playerHealth;
 	Image healthBar;
@@ -29,6 +35,10 @@ public class Game : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		audios = GetComponents<AudioSource> ();
+		gameMusic = audios [0];
+		gameSounds = audios [1];
+
 		gameOverColor = new Color (1f, 0f, 0f, 0.3f); //red
 		levelCompletedColor = new Color (0f, 1f, 0f, 0.3f); //green
 
@@ -75,7 +85,7 @@ public class Game : MonoBehaviour
 //		healthBar.rectTransform.localScale = new Vector3 (playerHealth, 1f, 1f);
 //	}
 //
-	//recibe de player el daño, y modifica la barra de salud
+	//recibe de player el daño, y modifica la barra de salud. Si cayó a precipicio: die true
 	public void Damage(bool die)
 	{
 		playerHealth = Mathf.Clamp (playerHealth - 0.25f, 0f, 1f);
@@ -84,6 +94,8 @@ public class Game : MonoBehaviour
 		//si player ha muerto
 		if (healthBar.rectTransform.localScale.x == 0f || die) 
 		{
+			gameSounds.clip = audioDie;
+			gameSounds.Play ();
 			Exit ();
 		}
 	}
@@ -95,14 +107,19 @@ public class Game : MonoBehaviour
 		PlayerPrefs.SetInt ("level", activeScene.buildIndex + 1);
 		PlayerPrefs.SetFloat ("health", playerHealth);
 
-		gameManager.Health = playerHealth; //brinda info a gameManager, para recibirla en el próximo nivel en Start()
+		//brinda info a gameManager, para recibirla en el próximo nivel en Start()
+		gameManager.Health = playerHealth; 
 
+		gameSounds.clip = audioWin;
+		gameSounds.Play ();
 		StartCoroutine(ChangeScene(activeScene.buildIndex + 1, "Nivel completado", levelCompletedColor)); //activeScene.buildIndex + 1: nivel siguiente al actual
 	}
 
 	//llamado desde player
 	public void GameWon()
 	{
+		gameSounds.clip = audioWin;
+		gameSounds.Play ();
 		StartCoroutine(ChangeScene(0, "Felicitaciones! Has ganado!", levelCompletedColor)); //escena 0: menú
 	}
 
@@ -116,13 +133,14 @@ public class Game : MonoBehaviour
 	//coroutine
 	private IEnumerator ChangeScene (int scene, string text, Color color)
 	{
+		gameMusic.Stop();
 		GameObject.Destroy (player);
 		pause.SetActive (false);
 		userInterface.enabled = false;
 		gameOverText.text = text;
 		gameOverImage.color = color;
 		gameOver.enabled = true;
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (4.5f);
 		gameOver.enabled = false;
 		SceneManager.LoadScene (scene);
 	}

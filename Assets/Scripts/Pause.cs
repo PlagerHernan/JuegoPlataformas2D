@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour 
 {
-	//public InteractiveElement buttonPause;
-	public GameObject infoPause;
 	public GameObject userInterface;
+	private AudioSource gameMusic;
 
 	private Canvas canvasPause;
 	public bool pause;
@@ -17,6 +16,8 @@ public class Pause : MonoBehaviour
 	{
 		canvasPause = GetComponent<Canvas> ();
 		canvasPause.enabled = false;
+		gameMusic = GameObject.Find ("Game").GetComponent<AudioSource>();
+
 	}
 
 	void Update () 
@@ -40,16 +41,16 @@ public class Pause : MonoBehaviour
 
 	public void EnterPause()
 	{
+		gameMusic.pitch = Time.timeScale = 0f;
 		Time.timeScale = 0f; //pausa el juego
 		canvasPause.enabled = true;
-		infoPause.SetActive(true);
 		userInterface.SetActive (false);
 	}
 	public void ExitPause()
 	{
 		canvasPause.enabled = false;
-		infoPause.SetActive(false);
 		userInterface.SetActive (true);
+		gameMusic.pitch = Time.timeScale = 1f;
 		Time.timeScale = 1f; //reanuda el juego
 	}
 }

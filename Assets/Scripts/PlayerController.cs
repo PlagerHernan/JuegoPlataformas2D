@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
 {	
-	//GameObject game;
-
+	Game game;
 	SimpleTouchController leftController;
 	InteractiveElement buttonJump;
 
@@ -20,8 +19,6 @@ public class PlayerController : MonoBehaviour
 	public bool jump;
 	private bool movement = true;
 
-	Game game;
-
 	void Awake()
 	{
 		game = Object.FindObjectOfType<Game> ();
@@ -33,7 +30,6 @@ public class PlayerController : MonoBehaviour
 		leftController = GameObject.Find ("Joystick").GetComponent<SimpleTouchController> ();
 		buttonJump = GameObject.Find ("ButtonJump").GetComponent<InteractiveElement> ();
 
-		//game = GameObject.Find ("Game");
 		rb2d = GetComponent<Rigidbody2D> ();	
 		animator = GetComponent<Animator> ();
 		//color = new Color (246 / 255f, 97 / 255f, 11 / 255f); //color anaranjado (alternativa para shock)
@@ -56,7 +52,7 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("grounded", false);
 		}
 
-		bool userJump = Input.GetKeyDown(KeyCode.UpArrow) || buttonJump.click;
+		bool userJump = buttonJump.click || Input.GetKey (KeyCode.W);// || Input.GetKey (KeyCode.UpArrow); 
 
 		if (userJump && grounded) 
 		{
