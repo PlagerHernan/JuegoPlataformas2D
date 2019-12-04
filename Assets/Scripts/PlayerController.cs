@@ -14,10 +14,15 @@ public class PlayerController : MonoBehaviour
 
 	public float speed = 75f;
 	public float maxSpeed = 3f;
-	public bool grounded;
+	public bool grounded; //seteado en Legs.cs
 	public float jumpForcePlayer = 9.5f;
 	public bool jump;
 	private bool movement = true;
+
+	AudioSource sounds;
+	public AudioClip audioJump;
+	public AudioClip audioCrush;
+	public AudioClip damage;
 
 	void Awake()
 	{
@@ -35,6 +40,8 @@ public class PlayerController : MonoBehaviour
 		//color = new Color (246 / 255f, 97 / 255f, 11 / 255f); //color anaranjado (alternativa para shock)
 		dust = GetComponentInChildren<ParticleSystem>();
 		transform.position = new Vector3 (-7f, -3.7f, 0f);
+
+		sounds = GetComponent<AudioSource> ();
 	}
 	
 	 //Update is called once per frame
@@ -56,6 +63,10 @@ public class PlayerController : MonoBehaviour
 
 		if (userJump && grounded) 
 		{
+			sounds.volume = 1f;
+			sounds.clip = audioJump;
+			sounds.Play ();
+
 			jumpForcePlayer = 9.5f;
 			jump = true; //se concreta luego en FixedUpdate()
 		}
@@ -83,10 +94,10 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//TECLADO
-		float x_velocity = Input.GetAxis ("Horizontal");
+		//float x_velocity = Input.GetAxis ("Horizontal");
 
 		//TACTIL (JOYSTICK)
-		//float x_velocity = leftController.GetTouchPosition.x;
+		float x_velocity = leftController.GetTouchPosition.x;
 
 		if (!movement) 
 		{
@@ -106,6 +117,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	//salto voluntario 
 	public void Jump(float jumpForce)
 	{
 		rb2d.velocity = new Vector2 (rb2d.velocity.x, 0f); //antes de agregar fuerza, me aseguro que la velocidad vertical sea cero, para no añadir impulso al impulso (evitar doble salto)
@@ -113,14 +125,22 @@ public class PlayerController : MonoBehaviour
 		jump = false;
 	}
 
+	//salto post-aplastar enemy, llamado desde EnemyController.cs
 	public void JumpEnemy()
 	{
+		sounds.volume = 0.2f;
+		sounds.clip = audioCrush;
+		sounds.Play ();
 		jumpForcePlayer = 3f; //salto pequeño
 		jump = true;
 	}
 
+	//llamado desde EnemyController.cs
 	void Shock(float positionEnemy)
 	{
+		sounds.volume = 1f;
+		sounds.clip = damage;
+		sounds.Play ();
 		//spriteRend.color = color; 
 		animator.Play ("Player_Shock");
 		movement = false; 

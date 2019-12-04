@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour 
 {
+	private PlayerController player;
+
 	private Rigidbody2D rigid; 
 	private EdgeCollider2D col;
 	private Vector3 initialPosition;
@@ -11,6 +13,8 @@ public class FallingPlatform : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		player = FindObjectOfType<PlayerController>();
+
 		rigid = GetComponent<Rigidbody2D> ();
 		initialPosition = transform.position; 
 		col = GetComponent<EdgeCollider2D> ();
@@ -27,6 +31,13 @@ public class FallingPlatform : MonoBehaviour
 		{
 			Invoke ("Falling", 0.5f);
 			Invoke("Reappear", 4f);
+		}
+	}
+	void OnCollisionExit2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Player") 
+		{
+			player.grounded = false;
 		}
 	}
 

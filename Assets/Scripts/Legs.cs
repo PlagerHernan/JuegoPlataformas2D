@@ -29,6 +29,10 @@ public class Legs : MonoBehaviour
 			player.transform.parent = other.gameObject.transform; //cuando está en suelo, es hijo de él (para que se mueva junto con él en plataformas móviles)
 			player.grounded = true;
 		}
+		if (other.gameObject.tag == "Ground") 
+		{
+			player.grounded = true;
+		}
 	}
 
 	void OnCollisionStay2D (Collision2D other)
