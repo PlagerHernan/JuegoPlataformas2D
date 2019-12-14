@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		leftController = GameObject.Find ("Joystick").GetComponent<SimpleTouchController> ();
-		buttonJump = GameObject.Find ("ButtonJump").GetComponent<InteractiveElement> ();
+		//leftController = GameObject.Find ("Joystick").GetComponent<SimpleTouchController> ();
+		//buttonJump = GameObject.Find ("ButtonJump").GetComponent<InteractiveElement> ();
 
 		rb2d = GetComponent<Rigidbody2D> ();	
 		animator = GetComponent<Animator> ();
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("grounded", false);
 		}
 
-		bool userJump = buttonJump.click || Input.GetKey (KeyCode.W);// || Input.GetKey (KeyCode.UpArrow); 
+		bool userJump = Input.GetKey (KeyCode.W); // buttonJump.click || Input.GetKey (KeyCode.UpArrow)  
 
 		if (userJump && grounded) 
 		{
@@ -94,10 +94,10 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//TECLADO
-		//float x_velocity = Input.GetAxis ("Horizontal");
+		float x_velocity = Input.GetAxis ("Horizontal");
 
 		//TACTIL (JOYSTICK)
-		float x_velocity = leftController.GetTouchPosition.x;
+		//float x_velocity = leftController.GetTouchPosition.x;
 
 		if (!movement) 
 		{
