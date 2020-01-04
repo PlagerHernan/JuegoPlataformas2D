@@ -7,11 +7,5 @@ https://freesound.org/people/LittleRobotSoundFactory/sounds/274183/
 Jump.wav => Jump_C_05.wav by cabled_mess
 https://freesound.org/people/cabled_mess/sounds/350905/
 
-ButtonClick.wav => videogame-menu-button-click.wav by Christopherderp
-https://freesound.org/people/Christopherderp/sounds/342200/
-
 Crush.wav => smashed-bug.wav by Gcastanera
 https://freesound.org/people/Gcastanera/sounds/266535/
-
-Step.wav => snow-step-3.wav by morganpurkis
-https://freesound.org/people/morganpurkis/sounds/369779/
